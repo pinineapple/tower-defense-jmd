@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+
 Projet de jeu de tour en Python
 
 = Introduction =
@@ -7,7 +7,4 @@ Construit pour avoir quelque chose à tester pour faire de srecherches de gamepl
 
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+..._On verra_... plus tard!
