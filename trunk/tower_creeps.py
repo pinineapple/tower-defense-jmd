@@ -6,6 +6,8 @@ class Vague(object):
         self.chemin=chemin
         self.creeps=[typeCreep(self,self.chemin[:],force,point)]
         self.vagueNbr=3
+        if typeCreep==Boss_fantome:
+            self.vagueNbr=1
         self.creeptype=typeCreep
         self.point=point
         self.force=force
@@ -27,7 +29,7 @@ class Vague(object):
                 
     def prochainCreep(self):
         self.creeps.append(self.creeptype(self,self.chemin[:],self.force,self.point))
-        print "VAGUE",self,self.vagueNbr
+        #print "VAGUE",self,self.vagueNbr
 
 class Creep(object):
     no=0
@@ -79,4 +81,13 @@ class Tank(Creep):
         self.forceorigine=self.force
         self.point=self.point*20
         self.vitesse=self.vitesse*0.7
+
+class Boss_fantome(Creep):
+    def __init__(self,parent,chemin,force,point):
+        Creep.__init__(self,parent,chemin,force,point) 
+        self.nom="boss_fantome"           
+        self.force=self.force*10
+        self.forceorigine=self.force
+        self.point=self.point*100
+        self.vitesse=self.vitesse*0.5
         

@@ -429,9 +429,17 @@ class Vue(object):
         self.initcadredata()
         self.cadredata.pack(side=LEFT)
         
-        self.tourimg = {"tour":PhotoImage(file="tour.gif"),"minaret":PhotoImage(file="minaret.gif"),"lanceur":PhotoImage(file="lanceur.gif")}
+        self.tourimg = {
+            "tour":PhotoImage(file="images/tour.gif"),
+            "minaret":PhotoImage(file="images/minaret.gif"),
+            "lanceur":PhotoImage(file="images/lanceur.gif")
+        }
         
-        self.creepimg= {"generique":PhotoImage(file="generique.gif"),"etoile":PhotoImage(file="creep4.gif"),"tank":PhotoImage(file="tank.gif")}
+        self.creepimg = {
+            "generique":PhotoImage(file="images/generique.gif"),
+            "etoile":PhotoImage(file="images/creep4.gif"),
+            "tank":PhotoImage(file="images/tank.gif")
+        }
         
     def initcadredata(self):
         pointage=Label(self.cadredata,text="Points")
