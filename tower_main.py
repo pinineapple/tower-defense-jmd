@@ -10,8 +10,8 @@ from tower_tours import *
         
 class Jeutour(object):
     def __init__(self,parent):
-        self.creepsTypes={"generique":Creep,"etoile":Etoile,"tank":Tank}
-        self.tourTypes={"tour":Tour,"minaret":Minaret,"lanceur":Lanceur}
+        self.creepsTypes={"generique":Creep,"etoile":Etoile,"tank":Tank,"boss_fantome":Boss_fantome}
+        self.tourTypes={"tour":Tour,"minaret":Minaret,"lanceur":Lanceur,"paralyseur":Paralyseur,"generateur":Generateur}
         self.parent=parent
         #self.chemin=[1,20,20,20,80,20,80,120,180,120,75,233,180,180,100,180,100,240,500,240,500,100,300,100,300,380,600,380]
         
@@ -24,6 +24,8 @@ class Jeutour(object):
         #self.chemin=[1,20,20,20,800,580]
         self.chemin=[1,20,20,20,20,580,60,580,60,20,100,20,100,580,140,580,140,20,180,20,180,580,
                    220,580,220,20,260,20,260,580,500,580,500,300,700,300,700,100,300,100,300,400,800,400]
+        self.chemin=[1,1]
+        self.getChemin(800,600)
         chtemp=self.chemin[:]
         self.vagues=[]
         self.vaguesmortes=[]
@@ -31,9 +33,20 @@ class Jeutour(object):
         self.vie=20
         self.pointage=0
         self.argent=100
-        self.cout={"tour":10,"minaret":25,"lanceur":100}
+        self.cout={"tour":10,"minaret":25,"lanceur":100,"paralyseur":50,"generateur":500}
         self.force=1
         self.point=1
+        self.nbrVague=0
+        
+    def getChemin(self,x,y):
+        n= random.randrange(5,15)
+        for i in range(n):
+            xi=random.randrange(x)
+            yi=random.randrange(y)
+            self.chemin.append(xi)
+            self.chemin.append(yi)
+        self.chemin.append(x)
+        self.chemin.append(y)
 
     def vendTour(self,tourid):
         for i in self. tours:
@@ -58,6 +71,7 @@ class Jeutour(object):
         self.vagues.append(newwave)
         self.force=self.force+3
         self.point=self.point+1
+        self.nbrVague=self.nbrVague+1
         self.parent.dessineJeu()
         
     def augmenteTour(self,x,y):
@@ -103,7 +117,7 @@ class Jeutour(object):
             elif i.typeobus=="lazer":
                 for j in i.obus:
                     j.cible.force=j.cible.force-j.force
-                    if j.cible.force<1:
+                    if not j.cible.force>0:
                         j.cible.parent.creepmort.append(j.cible)
                         self.pointage=self.pointage+j.cible.point
                         self.argent=self.argent+(j.cible.point*1.1)
@@ -182,25 +196,31 @@ class Jeutour(object):
           
 class Controleur(object):
         def __init__(self):
+            self.vue=Vue(self)
+            self.timerActif=0
+            self.nouvellePartie()
+            self.vue.root.mainloop()
+        
+        def nouvellePartie(self):
+            self.vue.root.after_cancel(self.timerActif)
+            self.vue.canevas.delete(ALL)
             self.modele=Jeutour(self)
             self.partieActive=1
-            self.vue=Vue(self)
             self.vue.paintAire(self.modele)
-            
             self.animate()
-            self.vue.root.mainloop()
-            
+                
         def paintTour(self):
             self.vue.paintTour(self.modele)
+            
         def animate(self):
             if self.partieActive:
                 if len(self.modele.vagues)==0:
                     self.modele.demarreVague()
                 self.modele.anime()
-            self.vue.root.after(50,self.animate)
+            self.timerActif=self.vue.root.after(50,self.animate)
             
         def dessineJeu(self):
-            self.vue.anime(self.modele.vagues,self.modele.tours,self.modele.pointage,self.modele.vie,self.modele.argent)
+            self.vue.anime(self.modele)
         
         def demarrevague(self):
             self.modele.demarreVague()

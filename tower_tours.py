@@ -14,7 +14,7 @@ class Tour(object):
         self.etat=self.rythme
         self.x=x
         self.y=y
-        self.taille=16
+        self.taille=8
         self.rayon=rayon
         self.puissance=1
         self.obus=[]
@@ -55,6 +55,8 @@ class Tour(object):
                 self.obus.append(Lazer(self,i,self.typeobus))
             elif self.typeobus=="fusee":
                 self.obus.append(Fusee(self,i,self.typeobus))
+            elif self.typeobus=="eclair":
+                self.obus.append(Eclair(self,i,self.typeobus))
             return
             
     def deplace(self):
@@ -77,16 +79,29 @@ class Minaret(Tour):
         Tour.__init__(self,parent,x,y,rayon,point) 
         self.nom="minaret"
         self.typeobus="lazer"
+        
+class Paralyseur(Tour):
+    def __init__(self,parent,x=100,y=100,rayon=100,point=1):
+        Tour.__init__(self,parent,x,y,rayon,point) 
+        self.nom="paralyseur"
+        self.typeobus="eclair"
      
+class Generateur(Tour):
+    def __init__(self,parent,x=100,y=100,rayon=100,point=1):
+        Tour.__init__(self,parent,x,y,rayon,point) 
+        self.nom="generateur"
+        self.typeobus="onde"       
+  
 class Lanceur(Tour):
     def __init__(self,parent,x=100,y=100,rayon=100,point=1):
         Tour.__init__(self,parent,x,y,rayon,point) 
         self.nom="lanceur"
-        self.typeobus="fusee"       
-        self.rythme=40 
+        self.typeobus="fusee"   
+        self.taille=3
         self.vitesse=5
-        self.rayon=self.rayon*2
-        
+        self.rythme=50
+        self.etat=self.rythme
+              
     def update(self):
         n=self.niveau+1
         if n in self.cout and self.parent.argent>= self.cout[n]:
@@ -95,7 +110,7 @@ class Lanceur(Tour):
             self.rayon=self.rayon+70
             self.vitesse=self.vitesse*1.1
             if self.rythme>1:
-                self.rythme=self.rythme-4
+                self.rythme=self.rythme-1
             self.parent.argent=self.parent.argent-self.cout[n]
         else:
             self.parent.parent.message("Pas assez d'argent")
@@ -142,3 +157,6 @@ class Fusee(Obus):
         self.angle=Helper.calcAngle(self.x,self.y,self.cible.x,self.cible.y)
         self.x,self.y= Helper.getAngledPoint(self.angle,self.vitesse,self.x,self.y)       
   
+class Eclair(Obus):
+    def __init__(self, parent,cible,typeobus):
+        Obus.__init__(self, parent, cible, typeobus)
