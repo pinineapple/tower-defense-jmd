@@ -6,26 +6,30 @@ from tower_vue import *
 from tower_creeps import *
 from tower_tours import *
 
-
+class Chemin(object):
+    def __init__(self,x,y):
+        self.x=x
+        self.y=y
+        self.chemin=[1,1]
+        self.makeChemin()
+        
+    def makeChemin(self):
+        n= random.randrange(5,15)
+        for i in range(n):
+            xi=random.randrange(self.x)
+            yi=random.randrange(self.y)
+            self.chemin.append(xi)
+            self.chemin.append(yi)
+        self.chemin.append(self.x)
+        self.chemin.append(self.y)
+    
         
 class Jeutour(object):
-    def __init__(self,parent):
+    def __init__(self,parent,chemin=[1,1,800,600]):
         self.creepsTypes={"generique":Creep,"etoile":Etoile,"tank":Tank,"boss_fantome":Boss_fantome}
         self.tourTypes={"tour":Tour,"minaret":Minaret,"lanceur":Lanceur,"paralyseur":Paralyseur,"generateur":Generateur}
         self.parent=parent
-        #self.chemin=[1,20,20,20,80,20,80,120,180,120,75,233,180,180,100,180,100,240,500,240,500,100,300,100,300,380,600,380]
-        
-#        self.chemin=[1,20,20,20,80,20,80,120,180,120,75,233,180,180,
-#                    100,180,100,240,500,240,500,333,555,182,394,128,321,
-#                    234,183,155,371,222,342,100,300,100,300,380,600,380,
-#                     700,300,300,300,300,550,800,550]
-       # self.chemin=[1,20,400,300,450,300,450,250,350,250,350,350,500,350,500,200,300,200,300,400,550,400,
-        #           550,150,250,150,250,550,800,550]
-        #self.chemin=[1,20,20,20,800,580]
-        self.chemin=[1,20,20,20,20,580,60,580,60,20,100,20,100,580,140,580,140,20,180,20,180,580,
-                   220,580,220,20,260,20,260,580,500,580,500,300,700,300,700,100,300,100,300,400,800,400]
-        self.chemin=[1,1]
-        self.getChemin(800,600)
+        self.chemin=Chemin(800,600).chemin
         chtemp=self.chemin[:]
         self.vagues=[]
         self.vaguesmortes=[]
@@ -37,16 +41,6 @@ class Jeutour(object):
         self.force=1
         self.point=1
         self.nbrVague=0
-        
-    def getChemin(self,x,y):
-        n= random.randrange(5,15)
-        for i in range(n):
-            xi=random.randrange(x)
-            yi=random.randrange(y)
-            self.chemin.append(xi)
-            self.chemin.append(yi)
-        self.chemin.append(x)
-        self.chemin.append(y)
 
     def vendTour(self,tourid):
         for i in self. tours:
@@ -239,6 +233,9 @@ class Controleur(object):
             self.modele.vendTour(tourid)
         def updateTour(self,tourid):
             self.modele.updateTour(tourid)
+        def sauverChemin(self,chemin):
+            print "".join(chemin)
+            
 
 def testDistance():
     n= Helper.calcDistance(200,20,360,50)
