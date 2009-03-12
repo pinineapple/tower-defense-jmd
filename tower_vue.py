@@ -68,8 +68,13 @@ class Vue(object):
         nouvellevague.grid(column=0,row=0)
         nouvellepartie=Button(cadreBtn,text="nouvelle partie",command=self.parent.nouvellePartie)
         nouvellepartie.grid(column=0,row=1)
+        nouvellepartie=Button(cadreBtn,text="sauver chemin",command=self.sauverChemin)
+        nouvellepartie.grid(column=0,row=2)
         
         cadreBtn.pack(side=LEFT)
+        
+    def sauverChemin(self,evt):
+        self.parent.sauverChemin(self.cheminActif)
         
     def cadreTour(self):
         cadreBtn=Frame(self.cadredata,bg="white")
@@ -142,6 +147,7 @@ class Vue(object):
     def paintAire(self,modele):
         self.canevas.delete("chemin")
         self.canevas.create_line(modele.chemin,width=2,fill="blue",tags=("chemin"))
+        self.cheminActif=modele.chemin
         
     def paintTour(self,modele):
         self.canevas.delete("tour")
