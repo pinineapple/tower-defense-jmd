@@ -204,6 +204,7 @@ class Controleur(object):
             self.vue=Vue(self)
             self.timerActif=0
             self.nouvellePartie()
+            self.vue.cadreIntroduction(self.modele.chemin)
             self.vue.root.mainloop()
         
         def nouvellePartie(self):

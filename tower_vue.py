@@ -28,6 +28,23 @@ class Vue(object):
         self.cadreCommande()
         self.cadredata.pack(side=LEFT)
         
+    def cadreIntroduction(self,chemins):
+        self.canevas.delete(ALL)
+        debx=100
+        deby=100
+        finx=self.largeur-100
+        largeur=(self.largeur-200)/5
+        hauteur=(largeur/float(self.largeur))*float(self.hauteur)
+        print "INTRO",largeur,hauteur
+        self.canevas.create_rectangle(debx,deby,debx+largeur,deby+hauteur,outline="red")
+        
+        x=chemins.pop()
+        y=chemins.pop()
+        n=len(chemins)/2
+        for i in range(n):
+            print i
+            
+        
     def cadreCommande(self):
         
         self.cadreOption()        
