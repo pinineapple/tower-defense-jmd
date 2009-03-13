@@ -31,6 +31,12 @@ class Chemin(object):
         chemins=file("chemins.txt","a")
         chemins.write(s+"\n")
         chemins.close()
+    def getChemins(self):
+        chemins=file("chemins.txt")
+        leschemins=chemins.readlines()
+        chemins.close()
+        return leschemins
+        
         
         
         
@@ -204,7 +210,7 @@ class Controleur(object):
             self.vue=Vue(self)
             self.timerActif=0
             self.nouvellePartie()
-            self.vue.cadreIntroduction(self.modele.chemin)
+            self.vue.cadreIntroduction(self.modele.cheminObj.getChemins())
             self.vue.root.mainloop()
         
         def nouvellePartie(self):

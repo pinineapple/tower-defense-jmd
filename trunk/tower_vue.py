@@ -29,7 +29,9 @@ class Vue(object):
         self.cadredata.pack(side=LEFT)
         
     def cadreIntroduction(self,chemins):
-        self.canevas.delete(ALL)
+        #self.canevas.delete(ALL)
+        chemins=chemins[0]
+        chemins=chemins.split(",")
         debx=100
         deby=100
         finx=self.largeur-100
@@ -37,12 +39,16 @@ class Vue(object):
         hauteur=(largeur/float(self.largeur))*float(self.hauteur)
         print "INTRO",largeur,hauteur
         self.canevas.create_rectangle(debx,deby,debx+largeur,deby+hauteur,outline="red")
-        
-        x=chemins.pop()
-        y=chemins.pop()
+        rapport=largeur/float(self.largeur)
+        x=int(chemins.pop(0))
+        y=int(chemins.pop(0))
         n=len(chemins)/2
         for i in range(n):
-            print i
+            x1=int(chemins.pop(0))*rapport
+            y1=int(chemins.pop(0))*rapport
+            self.canevas.create_line(x+debx,y+deby,x1+debx,y1+deby,fill="blue")
+            x=x1
+            y=y1
             
         
     def cadreCommande(self):
