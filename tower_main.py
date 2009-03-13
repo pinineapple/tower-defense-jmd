@@ -22,14 +22,25 @@ class Chemin(object):
             self.chemin.append(yi)
         self.chemin.append(self.x)
         self.chemin.append(self.y)
-    
+    def saveChemin(self):
+        s=""
+        for i in self.chemin:
+            i=str(i)
+            s=s+i+","
+        s=s[:-1]
+        chemins=file("chemins.txt","a")
+        chemins.write(s+"\n")
+        chemins.close()
+        
+        
         
 class Jeutour(object):
     def __init__(self,parent,chemin=[1,1,800,600]):
         self.creepsTypes={"generique":Creep,"etoile":Etoile,"tank":Tank,"boss_fantome":Boss_fantome}
         self.tourTypes={"tour":Tour,"minaret":Minaret,"lanceur":Lanceur,"paralyseur":Paralyseur,"generateur":Generateur}
         self.parent=parent
-        self.chemin=Chemin(800,600).chemin
+        self.cheminObj=Chemin(800,600)
+        self.chemin=self.cheminObj.chemin
         chtemp=self.chemin[:]
         self.vagues=[]
         self.vaguesmortes=[]
@@ -233,8 +244,8 @@ class Controleur(object):
             self.modele.vendTour(tourid)
         def updateTour(self,tourid):
             self.modele.updateTour(tourid)
-        def sauverChemin(self,chemin):
-            print "".join(chemin)
+        def sauverChemin(self):
+            self.modele.cheminObj.saveChemin()
             
 
 def testDistance():

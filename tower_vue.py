@@ -73,8 +73,8 @@ class Vue(object):
         
         cadreBtn.pack(side=LEFT)
         
-    def sauverChemin(self,evt):
-        self.parent.sauverChemin(self.cheminActif)
+    def sauverChemin(self):
+        self.parent.sauverChemin()
         
     def cadreTour(self):
         cadreBtn=Frame(self.cadredata,bg="white")
