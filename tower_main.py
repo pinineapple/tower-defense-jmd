@@ -108,17 +108,22 @@ class Jeutour(object):
         
     def verifieCreep(self):
         for i in self.tours:
-            if i.typeobus=="obus" :
+            if i.typeobus=="obus" or i.typeobus=="eclair" :
                 for j in i.obus:
                     for m in self.vagues:
                         for k in m.creeps:
                             if (j.x>k.x and j.x<k.x+k.taille and j.y>k.y and j.y<k.y+k.taille) or ( j.x+j.taille>k.x and j.x+j.taille<k.x+k.taille and j.y+j.taille>k.y and j.y+j.taille<k.y+k.taille):
-                                k.force=k.force-j.force
-                                if k.force<1:
-                                    m.creepmort.append(k)
-                                    self.pointage=self.pointage+k.point
-                                    self.argent=self.argent+(k.point*1.1)
-                                i.obusmort.append(j)
+                                
+                                if i.typeobus=="eclair":
+                                    k.vitesse=k.vitesse*j.ralentisseur
+                                else:
+                                    k.force=k.force-j.force
+                                    k.hit=3
+                                    if k.force<1:
+                                        m.creepmort.append(k)
+                                        self.pointage=self.pointage+k.point
+                                        self.argent=self.argent+(k.point*1.1)
+                                    i.obusmort.append(j)
                                 break
                             
                         for m in i.obusmort:

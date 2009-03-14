@@ -101,6 +101,7 @@ class Lanceur(Tour):
         self.vitesse=5
         self.rythme=50
         self.etat=self.rythme
+        self.force=self.force*3
               
     def update(self):
         n=self.niveau+1
@@ -132,6 +133,7 @@ class Obus(object):
         self.taille=6
         self.distance=self.parent.rayon
         self.force=self.parent.force
+        self.hit=0
         
     def deplace(self):        
         dist=Helper.calcDistance(self.x,self.y,self.xo,self.yo)
@@ -160,3 +162,5 @@ class Fusee(Obus):
 class Eclair(Obus):
     def __init__(self, parent,cible,typeobus):
         Obus.__init__(self, parent, cible, typeobus)
+        self.taille=4
+        self.ralentisseur=0.9

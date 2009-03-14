@@ -30,7 +30,7 @@ class Vue(object):
         
     def cadreIntroduction(self,chemins):
         #self.canevas.delete(ALL)
-        chemins=chemins[0]
+        chemins=chemins[len(chemins)-1]
         chemins=chemins.split(",")
         debx=100
         deby=100
@@ -177,7 +177,7 @@ class Vue(object):
         for i in modele.tours:
             self.canevas.create_image(i.x,i.y,anchor=CENTER, image=self.tourimg[i.nom],tags=("tour",str(i.id),i.nom))
             if self.varDistance.get():
-                self.canevas.create_oval(i.x-i.rayon,i.y-i.rayon,i.x+i.rayon,i.y+i.rayon,outline="lightyellow",dash=(6, 5, 2, 4),tags=("tour",str(i.id),"rayon",))
+                self.canevas.create_oval(i.x-i.rayon,i.y-i.rayon,i.x+i.rayon,i.y+i.rayon,outline="lightyellow",dash=(1,45),tags=("tour",str(i.id),"rayon",))
             
     def anime(self,modele):
         self.animeCreeps(modele.vagues)
@@ -205,6 +205,8 @@ class Vue(object):
             for i in j.obus:
                 if i.nom=="obus":
                     self.canevas.create_oval(i.x,i.y,i.x+i.taille,i.y+i.taille,outline="yellow",fill="red",tags=("obus"))
+                    if i.hit:
+                        pass
                 elif i.nom=="lazer":
                     self.canevas.create_line(i.x,i.y,i.cible.x,i.cible.y,fill="lightgreen",width=2,tags=("obus","lazer"))
                     self.canevas.create_line(i.x+1,i.y+1,i.cible.x-1,i.cible.y-1,fill="yellow",tags=("obus","lazer"))
