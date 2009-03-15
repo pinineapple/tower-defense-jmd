@@ -44,6 +44,7 @@ class Jeutour(object):
     def __init__(self,parent,chemin=[1,1,800,600]):
         self.creepsTypes={"generique":Creep,"etoile":Etoile,"tank":Tank,"boss_fantome":Boss_fantome}
         self.tourTypes={"tour":Tour,"minaret":Minaret,"lanceur":Lanceur,"paralyseur":Paralyseur,"generateur":Generateur}
+        self.cout={"tour":10,"minaret":250,"lanceur":100,"paralyseur":200,"generateur":500}
         self.parent=parent
         self.cheminObj=Chemin(800,600)
         self.chemin=self.cheminObj.chemin
@@ -54,7 +55,6 @@ class Jeutour(object):
         self.vie=20
         self.pointage=0
         self.argent=100
-        self.cout={"tour":10,"minaret":25,"lanceur":100,"paralyseur":50,"generateur":500}
         self.force=1
         self.point=1
         self.nbrVague=0
@@ -116,15 +116,15 @@ class Jeutour(object):
                                 
                                 if i.typeobus=="eclair":
                                     k.vitesse=k.vitesse*j.ralentisseur
-                                else:
-                                    k.force=k.force-j.force
-                                    k.hit=3
-                                    if k.force<1:
-                                        m.creepmort.append(k)
-                                        self.pointage=self.pointage+k.point
-                                        self.argent=self.argent+(k.point*1.1)
-                                    i.obusmort.append(j)
-                                break
+
+                                k.force=k.force-j.force
+                                k.hit=3
+                                if k.force<1:
+                                    m.creepmort.append(k)
+                                    self.pointage=self.pointage+k.point
+                                    self.argent=self.argent+(k.point*1.1)
+                                i.obusmort.append(j)
+                            break
                             
                         for m in i.obusmort:
                             if m in i.obus:

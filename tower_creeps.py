@@ -79,7 +79,7 @@ class Tank(Creep):
         self.nom="tank"           
         self.force=self.force*0.5
         self.forceorigine=self.force
-        self.point=self.point*20
+        self.point=self.point*2
         self.vitesse=self.vitesse*0.7
 
 class Boss_fantome(Creep):

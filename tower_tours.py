@@ -144,7 +144,7 @@ class Obus(object):
 class Lazer(Obus):
     def __init__(self, parent,cible,typeobus):
         Obus.__init__(self, parent, cible, typeobus)
-        self.force=self.parent.force/10.0
+        self.force=self.parent.force/33.0
         
     def deplace(self):
         dist=Helper.calcDistance(self.cible.x,self.cible.y,self.xo,self.yo)
@@ -164,3 +164,4 @@ class Eclair(Obus):
         Obus.__init__(self, parent, cible, typeobus)
         self.taille=4
         self.ralentisseur=0.9
+        self.force=self.parent.force/10.0
