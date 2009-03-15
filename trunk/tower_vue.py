@@ -11,7 +11,7 @@ class Vue(object):
         self.hauteur=600
         self.tourimg = {"tour":PhotoImage(file="./images/tour_40.gif"),"tour_20":PhotoImage(file="./images/tour_20.gif"),
                         "minaret":PhotoImage(file="./images/minaret_40.gif"),"minaret_20":PhotoImage(file="./images/minaret_20.gif"),
-                        "lanceur":PhotoImage(file="./images/lanceur_40.gif"),"lanceur_20":PhotoImage(file="./images/lanceur_20.gif"),
+                        "lanceur":PhotoImage(file="./images/lanceur_41.gif"),"lanceur_20":PhotoImage(file="./images/lanceur_20.gif"),
                         "paralyseur":PhotoImage(file="./images/paralyseur_40.gif"),"paralyseur_20":PhotoImage(file="./images/paralyseur_20.gif"),
                         "generateur":PhotoImage(file="./images/generateur_40.gif"),"generateur_20":PhotoImage(file="./images/generateur_20.gif")}
         
@@ -177,7 +177,7 @@ class Vue(object):
         for i in modele.tours:
             self.canevas.create_image(i.x,i.y,anchor=CENTER, image=self.tourimg[i.nom],tags=("tour",str(i.id),i.nom))
             if self.varDistance.get():
-                self.canevas.create_oval(i.x-i.rayon,i.y-i.rayon,i.x+i.rayon,i.y+i.rayon,outline="lightyellow",dash=(1,45),tags=("tour",str(i.id),"rayon",))
+                self.canevas.create_oval(i.x-i.rayon,i.y-i.rayon,i.x+i.rayon,i.y+i.rayon,outline="lightyellow",dash=(1,10),tags=("tour",str(i.id),"rayon",))
             
     def anime(self,modele):
         self.animeCreeps(modele.vagues)
