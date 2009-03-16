@@ -14,7 +14,7 @@ class Tour(object):
         self.etat=self.rythme
         self.x=x
         self.y=y
-        self.taille=8
+        self.taille=16
         self.rayon=rayon
         self.puissance=1
         self.obus=[]
@@ -79,12 +79,27 @@ class Minaret(Tour):
         Tour.__init__(self,parent,x,y,rayon,point) 
         self.nom="minaret"
         self.typeobus="lazer"
+        self.cout={2:100,3:250,4:600,5:1000}
+        
+    def update(self):
+        n=self.niveau+1
+        if n in self.cout and self.parent.argent>= self.cout[n]:
+            self.niveau=self.niveau+1
+            self.force=self.force*1.5
+            self.rayon=self.rayon+30
+            if self.rythme>1:
+                self.rythme=self.rythme-1
+            self.parent.argent=self.parent.argent-self.cout[n]
+        else:
+            self.parent.parent.message("Pas assez d'argent")
+        self.parent.parent.paintTour()
         
 class Paralyseur(Tour):
     def __init__(self,parent,x=100,y=100,rayon=100,point=1):
         Tour.__init__(self,parent,x,y,rayon,point) 
         self.nom="paralyseur"
         self.typeobus="eclair"
+        self.cout={2:100,3:300}
      
 class Generateur(Tour):
     def __init__(self,parent,x=100,y=100,rayon=100,point=1):
@@ -101,7 +116,8 @@ class Lanceur(Tour):
         self.vitesse=5
         self.rythme=50
         self.etat=self.rythme
-        self.force=self.force*3
+        self.force=self.force*5
+        self.cout={2:100,3:250,4:600,5:1000}
               
     def update(self):
         n=self.niveau+1
