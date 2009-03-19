@@ -99,7 +99,7 @@ class Paralyseur(Tour):
         Tour.__init__(self,parent,x,y,rayon,point) 
         self.nom="paralyseur"
         self.typeobus="eclair"
-        self.cout={2:100,3:300}
+        self.cout={2:300,3:500}
      
 class Generateur(Tour):
     def __init__(self,parent,x=100,y=100,rayon=100,point=1):
@@ -116,8 +116,8 @@ class Lanceur(Tour):
         self.vitesse=5
         self.rythme=50
         self.etat=self.rythme
-        self.force=self.force*5
-        self.cout={2:100,3:250,4:600,5:1000}
+        self.force=self.force*10
+        self.cout={2:250,3:600,4:600,5:1200}
               
     def update(self):
         n=self.niveau+1
