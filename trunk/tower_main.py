@@ -44,7 +44,7 @@ class Jeutour(object):
     def __init__(self,parent,chemin=[1,1,800,600]):
         self.creepsTypes={"generique":Creep,"etoile":Etoile,"tank":Tank,"boss_fantome":Boss_fantome}
         self.tourTypes={"tour":Tour,"minaret":Minaret,"lanceur":Lanceur,"paralyseur":Paralyseur,"generateur":Generateur}
-        self.cout={"tour":10,"minaret":250,"lanceur":100,"paralyseur":200,"generateur":500}
+        self.cout={"tour":10,"minaret":80,"lanceur":150,"paralyseur":200,"generateur":500}
         self.parent=parent
         self.cheminObj=Chemin(800,600)
         self.chemin=self.cheminObj.chemin
@@ -56,7 +56,7 @@ class Jeutour(object):
         self.pointage=0
         self.argent=100
         self.force=1
-        self.point=1
+        self.point=3
         self.nbrVague=0
 
     def vendTour(self,tourid):
