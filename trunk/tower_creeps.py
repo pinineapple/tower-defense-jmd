@@ -5,7 +5,7 @@ class Vague(object):
         self.parent=parent    
         self.chemin=chemin
         self.creeps=[typeCreep(self,self.chemin[:],force,point)]
-        self.vagueNbr=10
+        self.vagueNbr=5
         if typeCreep==Boss_fantome:
             self.vagueNbr=1
         self.creeptype=typeCreep

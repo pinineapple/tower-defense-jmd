@@ -38,8 +38,6 @@ class Chemin(object):
         return leschemins
         
         
-        
-        
 class Jeutour(object):
     def __init__(self,parent,chemin=[1,1,800,600]):
         self.creepsTypes={"generique":Creep,"etoile":Etoile,"tank":Tank,"boss_fantome":Boss_fantome}
@@ -112,9 +110,9 @@ class Jeutour(object):
                 for j in i.obus:
                     for m in self.vagues:
                         for k in m.creeps:
-                            if (j.x>k.x and j.x<k.x+k.taille and j.y>k.y and j.y<k.y+k.taille) or ( j.x+j.taille>k.x and j.x+j.taille<k.x+k.taille and j.y+j.taille>k.y and j.y+j.taille<k.y+k.taille):
+                            if (j.x>k.x and j.x<k.x+k.taille+j.vitesse and j.y>k.y and j.y<k.y+k.taille+j.vitesse) or ( j.x+j.taille>k.x and j.x+j.taille<k.x+k.taille+j. vitesse and j.y+j.taille>k.y and j.y+j.taille<k.y+k.taille+j.vitesse):
                                 
-                                if i.typeobus=="eclair":
+                                if i.typeobus=="eclair" and k.vitesse>0.3:
                                     k.vitesse=k.vitesse*j.ralentisseur
 
                                 k.force=k.force-j.force
