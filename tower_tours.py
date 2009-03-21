@@ -181,3 +181,4 @@ class Eclair(Obus):
         self.taille=4
         self.ralentisseur=0.9
         self.force=self.parent.force/10.0
+        self.vitesse=self.vitesse/1.5
