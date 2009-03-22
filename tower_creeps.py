@@ -88,6 +88,6 @@ class Boss_fantome(Creep):
         self.nom="boss_fantome"           
         self.force=self.force*10
         self.forceorigine=self.force
-        self.point=self.point*100
-        self.vitesse=self.vitesse*0.5
+        self.point=self.point*10.0
+        self.vitesse=self.vitesse*0.6
         
