@@ -67,7 +67,7 @@ class Jeutour(object):
         
     def updateTour(self,tourid):
         for i in self.tours:
-            if i.id==int(tourid):
+            if i.id==tourid:
                 i.update()
                 break
         self.parent.paintTour()
