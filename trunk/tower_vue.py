@@ -24,9 +24,21 @@ class Vue(object):
         self.canevas=Canvas(self.root,width=self.largeur,
                             height=self.hauteur,bg="black")
         self.canevas.pack()
+        self.canevas.tag_bind(("tour",),"<Button-1>",self.selectTour) 
         self.cadredata=Frame(self.root,bg="white")
         self.cadreCommande()
         self.cadredata.pack(side=LEFT)
+        self.selectionActive=()
+
+    def selectTour(self,evt):
+        obj=self.canevas.find_withtag(CURRENT)
+        if obj:
+            sestags=self.canevas.gettags(obj[0])
+            if self.selectionActive==sestags:
+                self.selectionActive=0
+            else:
+                self.selectionActive=sestags
+            self.paintTour(self.parent.modele)
         
     def cadreIntroduction(self,chemins):
         #self.canevas.delete(ALL)
@@ -117,20 +129,21 @@ class Vue(object):
         self.showdistance = Checkbutton(cadreBtn, text="Distance",variable=self.varDistance,command=self.parent.paintTour)
         self.showdistance.grid(column=2,row=0)
         
-        self.vendre=Button(cadreBtn,text="vendre",command=self.attendVente)
+        self.vendre=Button(cadreBtn,text="vendre")
+        self.vendre.bind("<Button>",self.vendTour)
         self.vendre.grid(column=2,row=1)
 
-        self.update=Button(cadreBtn,text="update",command=self.attendUpdate)
+        self.update=Button(cadreBtn,text="update")
+        self.update.bind("<Button>",self.updateTour)
         self.update.grid(column=2,row=2)
         
         cadreBtn.pack(side=LEFT)
-        
-    def attendVente(self):
-        self.canevas.bind("<Button>",self.vendTour)    
+          
       # je veux mettre des minaret - qu'est-ce que je passe au bouton, un type ???  
     def attendTour(self):
         self.prochainetour="tour"
         self.canevas.bind("<Button>",self.ajouteTour)       
+        
     def attendMinaret(self):
         self.prochainetour="minaret"
         self.canevas.bind("<Button>",self.ajouteTour)   
@@ -140,17 +153,20 @@ class Vue(object):
     def attendParalyseur(self):
         self.prochainetour="paralyseur"
         self.canevas.bind("<Button>",self.ajouteTour)  
+        
     def attendGenerateur(self):
         self.prochainetour="generateur"
         self.canevas.bind("<Button>",self.ajouteTour)  
-        
-    def attendUpdate(self):
-        self.canevas.tag_bind(("tour",),"<Button>",self.updateTour) 
     
+    def updateTour(self,evt):
+        if self.selectionActive:
+            self.parent.updateTour(int(self.selectionActive[1]))
+               
     def vendTour(self,evt):
-        obj=self.canevas.find_withtag(CURRENT)
-        sestags=self.canevas.gettags(obj[0])
-        self.parent.vendTour(int(sestags[1]))
+        if self.selectionActive:
+            n=int(self.selectionActive[1])
+            self.selectionActive=0
+            self.parent.vendTour(n)
         
     def ajouteTour(self,evt):
         x=evt.x
@@ -159,13 +175,7 @@ class Vue(object):
         y=self.canevas.canvasx(y)
         self.canevas.unbind("<Button>")
         self.parent.ajoutetour(x,y,self.prochainetour)
-        
-    def updateTour(self,evt):
-        obj=self.canevas.find_withtag(CURRENT)
-        if obj:
-            sestags=self.canevas.gettags(obj[0])
-            self.canevas.tag_unbind("tour","<Button>")
-            self.parent.updateTour(sestags[1])
+        self.prochainetour=0
         
     def paintAire(self,modele):
         self.canevas.delete("chemin")
@@ -175,6 +185,9 @@ class Vue(object):
     def paintTour(self,modele):
         self.canevas.delete("tour")
         for i in modele.tours:
+            if self.selectionActive and self.selectionActive[1]==str(i.id):
+                self.canevas.create_oval(i.x-i.rayon/2,i.y-i.rayon/2,i.x+i.rayon/2,i.y+i.rayon/2,outline="orange",dash=(1,10),tags=("tour",str(i.id),"rayon",))
+            
             self.canevas.create_image(i.x,i.y,anchor=CENTER, image=self.tourimg[i.nom],tags=("tour",str(i.id),i.nom))
             if self.varDistance.get():
                 self.canevas.create_oval(i.x-i.rayon,i.y-i.rayon,i.x+i.rayon,i.y+i.rayon,outline="lightyellow",dash=(1,10),tags=("tour",str(i.id),"rayon",))
@@ -182,6 +195,7 @@ class Vue(object):
     def anime(self,modele):
         self.animeCreeps(modele.vagues)
         self.animeTours(modele.tours)
+        self.ok=1
         self.afficheInfo(modele)
         
     def animeCreeps(self,vagues):
