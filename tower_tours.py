@@ -10,7 +10,7 @@ class Tour(object):
         self.nom="tour"
         self.typeobus="obus"
         self.parent=parent
-        self.rythme=10
+        self.rythme=40
         self.etat=self.rythme
         self.x=x
         self.y=y
@@ -22,7 +22,7 @@ class Tour(object):
         self.force=1
         self.niveau=1
         self.cout={2:10,3:25,4:60,5:100}
-        self.vitesse=20
+        self.vitesse=3
         self.point=point
         self.valeur={1:7,2:14,3:21,4:28,5:35,20:100}
         
@@ -181,4 +181,4 @@ class Eclair(Obus):
         self.taille=4
         self.ralentisseur=0.9
         self.force=self.parent.force/10.0
-        self.vitesse=self.vitesse/1.5
+        self.vitesse=self.vitesse*1.2

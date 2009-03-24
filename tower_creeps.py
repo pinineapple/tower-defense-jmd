@@ -43,7 +43,7 @@ class Creep(object):
         self.y=self.chemin.pop(0)
         self.setPath()
         self.espace=0
-        self.vitesse=3
+        self.vitesse=1
         self.taille=10
         self.force=force
         self.forceorigine=force

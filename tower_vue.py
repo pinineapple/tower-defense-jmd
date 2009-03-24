@@ -38,7 +38,15 @@ class Vue(object):
                 self.selectionActive=0
             else:
                 self.selectionActive=sestags
+                self.updateInfoTour(int(sestags[1]))
             self.paintTour(self.parent.modele)
+            
+    def updateInfoTour(self,tourid):
+        for i in self.parent.modele.tours:
+            if i.id==tourid:
+                self.afficheInfoTour(i)
+                break
+        self.parent.paintTour()
         
     def cadreIntroduction(self,chemins):
         #self.canevas.delete(ALL)
@@ -65,14 +73,15 @@ class Vue(object):
         
     def cadreCommande(self):
         
-        self.cadreOption()        
+        self.cadreOption()   
+        self.cadreInfo()     
         self.cadreTour()
-        self.cadreInfo()
+        self.cadreInfoTour()
             
         msg=Label(self.cadredata,text="MSG")
         self.msg=Label(self.cadredata,text=" ", bg="yellow")
-        msg.pack(side=LEFT)
-        self.msg.pack(side=LEFT)
+        msg.pack(side=TOP)
+        self.msg.pack(side=TOP)
         
     def cadreInfo(self):
         self.cadreinfo=Frame(self.cadredata)
@@ -94,7 +103,28 @@ class Vue(object):
         vie.grid(column=0,row=3)
         self.vie.grid(column=1,row=3)
         self.cadreinfo.pack(side=LEFT)
-    
+        
+    def cadreInfoTour(self):
+        self.cadreinfotour=Frame(self.cadredata)
+        typetour=Label(self.cadreinfotour,text="Nom")
+        self.nomtour=Label(self.cadreinfotour,text="0")
+        typetour.grid(column=0,row=0)
+        self.nomtour.grid(column=1,row=0)
+        
+        pointage=Label(self.cadreinfotour,text="Points")
+        self.pointtour=Label(self.cadreinfotour,text="110")
+        pointage.grid(column=0,row=1)
+        self.pointtour.grid(column=1,row=1)
+        argent=Label(self.cadreinfotour,text="Force")
+        self.forcetour=Label(self.cadreinfotour,text="0")
+        argent.grid(column=0,row=2)
+        self.forcetour.grid(column=1,row=2)
+        vie=Label(self.cadreinfotour,text="Vitesse")
+        self.vitessetour=Label(self.cadreinfotour,text="0")
+        vie.grid(column=0,row=3)
+        self.vitessetour.grid(column=1,row=3)
+        self.cadreinfotour.pack(side=LEFT)
+         
     def cadreOption(self):
         cadreBtn=Frame(self.cadredata,bg="white")
         #self.tour=Button(cadreBtn,text="Tour",image=self.tourimg["tour_20"],command=self.attendTour)
@@ -126,7 +156,7 @@ class Vue(object):
         self.tour5.grid(column=1,row=2)
         
         self.varDistance = IntVar()
-        self.showdistance = Checkbutton(cadreBtn, text="Distance",variable=self.varDistance,command=self.parent.paintTour)
+        self.showdistance = Checkbutton(cadreBtn, state=DISABLED,text="Distance",variable=self.varDistance,command=self.parent.paintTour)
         self.showdistance.grid(column=2,row=0)
         
         self.vendre=Button(cadreBtn,text="vendre")
@@ -186,12 +216,10 @@ class Vue(object):
         self.canevas.delete("tour")
         for i in modele.tours:
             if self.selectionActive and self.selectionActive[1]==str(i.id):
-                self.canevas.create_oval(i.x-i.rayon/2,i.y-i.rayon/2,i.x+i.rayon/2,i.y+i.rayon/2,outline="orange",dash=(1,10),tags=("tour",str(i.id),"rayon",))
+                self.canevas.create_oval(i.x-i.rayon,i.y-i.rayon,i.x+i.rayon,i.y+i.rayon,outline="orange",dash=(1,10),tags=("tour",str(i.id),"rayon",))
             
             self.canevas.create_image(i.x,i.y,anchor=CENTER, image=self.tourimg[i.nom],tags=("tour",str(i.id),i.nom))
-            if self.varDistance.get():
-                self.canevas.create_oval(i.x-i.rayon,i.y-i.rayon,i.x+i.rayon,i.y+i.rayon,outline="lightyellow",dash=(1,10),tags=("tour",str(i.id),"rayon",))
-            
+   
     def anime(self,modele):
         self.animeCreeps(modele.vagues)
         self.animeTours(modele.tours)
@@ -248,7 +276,13 @@ class Vue(object):
         self.pointage.config(text=str(modele.pointage))
         self.vie.config(text=str(modele.vie))
         self.argent.config(text=str(modele.argent))
-        self.nbrVague.config(text=str(modele.nbrVague))
+        self.nbrVague.config(text=str(modele.nbrVague))    
+        
+    def  afficheInfoTour(self,tour):
+        self.nomtour.config(text=str(tour.nom))   
+        self.pointtour.config(text=str(tour.point))
+        self.forcetour.config(text=str(tour.force))
+        self.vitessetour.config(text=str(tour.vitesse))
         
     def flameche(self,x,y):
         n=random.randrange(2,4)
