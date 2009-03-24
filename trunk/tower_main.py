@@ -52,7 +52,7 @@ class Jeutour(object):
         self.tours=[]
         self.vie=20
         self.pointage=0
-        self.argent=100
+        self.argent=1000
         self.force=1
         self.point=3
         self.nbrVague=0
@@ -232,7 +232,7 @@ class Controleur(object):
                 if len(self.modele.vagues)==0:
                     self.modele.demarreVague()
                 self.modele.anime()
-            self.timerActif=self.vue.root.after(50,self.animate)
+            self.timerActif=self.vue.root.after(30,self.animate)
             
         def dessineJeu(self):
             self.vue.anime(self.modele)
