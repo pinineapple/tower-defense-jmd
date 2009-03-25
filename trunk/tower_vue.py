@@ -155,17 +155,21 @@ class Vue(object):
         self.tour5=Button(cadreBtn,image=self.tourimg["generateur_20"],command=self.attendGenerateur)
         self.tour5.grid(column=1,row=2)
         
-        self.varDistance = IntVar()
-        self.showdistance = Checkbutton(cadreBtn, state=DISABLED,text="Distance",variable=self.varDistance,command=self.parent.paintTour)
-        self.showdistance.grid(column=2,row=0)
+        #self.varDistance = IntVar()
+        #self.showdistance = Checkbutton(cadreBtn, state=DISABLED,text="Distance",variable=self.varDistance,command=self.parent.paintTour)
+        #self.showdistance.grid(column=2,row=0)
         
         self.vendre=Button(cadreBtn,text="vendre")
         self.vendre.bind("<Button>",self.vendTour)
-        self.vendre.grid(column=2,row=1)
+        self.vendre.grid(column=2,row=0)
 
-        self.update=Button(cadreBtn,text="update")
-        self.update.bind("<Button>",self.updateTour)
-        self.update.grid(column=2,row=2)
+        self.update=Button(cadreBtn,text="update distance")
+        self.update.bind("<Button>",self.updateTourDistance)
+        self.update.grid(column=2,row=1)
+        
+        self.updatef=Button(cadreBtn,text="update force")
+        self.updatef.bind("<Button>",self.updateTourForce)
+        self.updatef.grid(column=2,row=2)
         
         cadreBtn.pack(side=LEFT)
           
@@ -188,9 +192,13 @@ class Vue(object):
         self.prochainetour="generateur"
         self.canevas.bind("<Button>",self.ajouteTour)  
     
-    def updateTour(self,evt):
+    def updateTourDistance(self,evt):
         if self.selectionActive:
-            self.parent.updateTour(int(self.selectionActive[1]))
+            self.parent.updateTourDistance(int(self.selectionActive[1]))
+            
+    def updateTourForce(self,evt):
+        if self.selectionActive:
+            self.parent.updateTourForce(int(self.selectionActive[1]))
                
     def vendTour(self,evt):
         if self.selectionActive:
