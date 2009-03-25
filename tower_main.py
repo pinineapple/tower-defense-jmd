@@ -65,10 +65,17 @@ class Jeutour(object):
                 break
         self.parent.paintTour()
         
-    def updateTour(self,tourid):
+    def updateTourDistance(self,tourid):
         for i in self.tours:
             if i.id==tourid:
-                i.update()
+                i.updateDistance()
+                break
+        self.parent.paintTour() 
+               
+    def updateTourForce(self,tourid):
+        for i in self.tours:
+            if i.id==tourid:
+                i.updateForce()
                 break
         self.parent.paintTour()
             
@@ -252,11 +259,15 @@ class Controleur(object):
             
         def vendTour(self,tourid):
             self.modele.vendTour(tourid)
-        def updateTour(self,tourid):
-            self.modele.updateTour(tourid)
+            
+        def updateTourDistance(self,tourid):
+            self.modele.updateTourDistance(tourid)
+            
+        def updateTourForce(self,tourid):
+            self.modele.updateTourForce(tourid)
+            
         def sauverChemin(self):
             self.modele.cheminObj.saveChemin()
-            
 
 def testDistance():
     n= Helper.calcDistance(200,20,360,50)
