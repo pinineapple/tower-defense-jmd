@@ -60,7 +60,7 @@ class Jeutour(object):
     def vendTour(self,tourid):
         for i in self. tours:
             if i.id==tourid:
-                self.argent=self.argent+i.valeur[i.niveau]
+                self.argent=self.argent*(i.valeur[i.niveauForce]+i.valeur[i.niveauDistance])
                 self.tours.remove(i)
                 break
         self.parent.paintTour()

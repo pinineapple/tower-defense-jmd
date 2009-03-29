@@ -26,7 +26,7 @@ class Tour(object):
         self.coutForce={2:10,3:25,4:60,5:100}
         self.vitesse=3
         self.point=point
-        self.valeur={1:7,2:14,3:21,4:28,5:35,20:100}
+        self.valeur={1:7,2:14,3:21,4:28,5:35,20:100,}
         
     def updateDistance(self):
         n=self.niveauDistance+1
@@ -43,7 +43,7 @@ class Tour(object):
         
     def updateForce(self):
         n=self.niveauForce+1
-        if n in self.coutForce and self.parent.argent>= self.coutForce[n]:
+        if n in self.coutForce and self.parent.argent>= self.coutForce[n] :
             self.niveauForce=self.niveauForce+1
             self.force=self.force*2
             self.parent.argent=self.parent.argent-self.coutForce[n]
