@@ -24,7 +24,7 @@ class Tour(object):
         self.coutDistance={2:10,3:25,4:60,5:100}
         self.niveauForce=1
         self.coutForce={2:10,3:25,4:60,5:100}
-        self.vitesse=3
+        self.vitesse=9
         self.point=point
         self.valeur={1:7,2:14,3:21,4:28,5:35,20:100,}
         
