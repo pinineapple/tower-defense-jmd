@@ -117,7 +117,9 @@ class Jeutour(object):
                 for j in i.obus:
                     for m in self.vagues:
                         for k in m.creeps:
-                            if (j.x>k.x and j.x<k.x+k.taille+j.vitesse and j.y>k.y and j.y<k.y+k.taille+j.vitesse) or ( j.x+j.taille>k.x and j.x+j.taille<k.x+k.taille+j. vitesse and j.y+j.taille>k.y and j.y+j.taille<k.y+k.taille+j.vitesse):
+                            if j.x>k.x -k.taille-j.vitesse and j.x<k.x+k.taille+j.vitesse and j.y>k.y -k.taille-j.vitesse and  j.y<k.y+k.taille+j.vitesse:
+                            
+                            #if (j.x>k.x and j.x<k.x+k.taille+j.vitesse and j.y>k.y and j.y<k.y+k.taille+j.vitesse) or ( j.x+j.taille>k.x and j.x+j.taille<k.x+k.taille+j. vitesse and j.y+j.taille>k.y and j.y+j.taille<k.y+k.taille+j.vitesse):
                                 
                                 if i.typeobus=="eclair" and k.vitesse>0.3:
                                     k.vitesse=k.vitesse*j.ralentisseur
